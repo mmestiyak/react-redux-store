@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectedProduct,
   removeSelectedProduct,
-} from "../redux/actions/productsActions";
+} from '../redux/actions/productsActions';
 const ProductDetails = () => {
   const { productId } = useParams();
   let product = useSelector((state) => state.product);
@@ -15,21 +15,24 @@ const ProductDetails = () => {
     const response = await axios
       .get(`https://fakestoreapi.com/products/${id}`)
       .catch((err) => {
-        console.log("Err: ", err);
+        console.log('Err: ', err);
       });
     dispatch(selectedProduct(response.data));
   };
 
   useEffect(() => {
-    if (productId && productId !== "") fetchProductDetail(productId);
+    if (productId && productId !== '') fetchProductDetail(productId);
     return () => {
       dispatch(removeSelectedProduct());
     };
   }, [productId]);
   return (
     <div className="ui grid container">
+      <Link to="/">
+        <i style={{ fontSize: '2.5rem' }} class="arrow left icon"></i>
+      </Link>
       {Object.keys(product).length === 0 ? (
-        <div>...Loading</div>
+        <div>Loading...</div>
       ) : (
         <div className="ui placeholder segment">
           <div className="ui two column stackable center aligned grid">
